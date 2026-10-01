@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ada Wong</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    background: #090303;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+}
+
+/* =========================
+   MOVING BACKGROUND
+========================= */
+
+.background {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: -2;
+    background:
+        radial-gradient(circle at center, #4b0505 0%, #170202 45%, #050000 100%);
+}
+
+.background::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,0.025) 0px,
+            rgba(255,255,255,0.025) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+    pointer-events: none;
+}
+
+.marquee {
+    position: absolute;
+    width: 150%;
+    left: -25%;
+    display: flex;
+    gap: 45px;
+    white-space: nowrap;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(45px, 8vw, 120px);
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.055);
+    text-transform: uppercase;
+    user-select: none;
+}
+
+.marquee span {
+    display: inline-block;
+}
+
+.row1 {
+    top: 5%;
+    animation: moveLeft 22s linear infinite;
+}
+
+.row2 {
+    top: 25%;
+    animation: moveRight 28s linear infinite;
+}
+
+.row3 {
+    top: 47%;
+    animation: moveLeft 25s linear infinite;
+}
+
+.row4 {
+    top: 68%;
+    animation: moveRight 30s linear infinite;
+}
+
+.row5 {
+    top: 88%;
+    animation: moveLeft 20s linear infinite;
+}
+
+@keyframes moveLeft {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-25%);
+    }
+}
+
+@keyframes moveRight {
+    from {
+        transform: translateX(-25%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 20px;
+}
+
+.container {
+    width: min(850px, 100%);
+    text-align: center;
+    position: relative;
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.small-title {
+    font-size: 11px;
+    letter-spacing: 7px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(55px, 13vw, 145px);
+    line-height: 0.9;
+    letter-spacing: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 30px rgba(255,0,0,0.25),
+        0 0 80px rgba(255,0,0,0.1);
+}
+
+.subtitle {
+    margin-top: 25px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 5px;
+    font-size: 11px;
+}
+
+/* =========================
+   ABOUT BUTTON
+========================= */
+
+.about-button {
+    margin-top: 55px;
+    padding: 15px 38px;
+    border: 1px solid rgba(255,255,255,0.4);
+    background: rgba(0,0,0,0.25);
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: 0.35s ease;
+}
+
+.about-button:hover {
+    background: white;
+    color: black;
+    transform: translateY(-3px);
+}
+
+/* =========================
+   INFO
+========================= */
+
+.info {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 1s ease, opacity 0.7s ease;
+}
+
+.info.show {
+    max-height: 600px;
+    opacity: 1;
+}
+
+.info-inner {
+    margin-top: 35px;
+    padding: 35px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.info h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+}
+
+.info p {
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+    line-height: 2;
+}
+
+/* =========================
+   QUOTE
+========================= */
+
+.quote {
+    margin-top: 65px;
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    line-height: 2;
+    color: rgba(255,255,255,0.8);
+    padding: 0 20px;
+}
+
+/* =========================
+   SCORE BUTTON
+========================= */
+
+.score-area {
+    margin-top: 25px;
+}
+
+.score-button {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.5);
+    background: #b40000;
+    box-shadow:
+        0 0 25px rgba(255,0,0,0.25),
+        inset 0 0 20px rgba(0,0,0,0.5);
+    cursor: pointer;
+    transition: 0.15s ease;
+    color: white;
+}
+
+.score-button:hover {
+    transform: scale(1.08);
+}
+
+.score-button:active {
+    transform: scale(0.92);
+}
+
+.score {
+    margin-top: 15px;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,0.65);
+}
+
+/* =========================
+   LEON ACCESS
+========================= */
+
+.access {
+    margin-top: 70px;
+}
+
+.access-text {
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 15px;
+}
+
+.access-button {
+    background: transparent;
+    color: white;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+    padding: 10px 20px;
+    cursor: pointer;
+    letter-spacing: 4px;
+    font-size: 10px;
+}
+
+.access-button:hover {
+    color: #ff3030;
+    border-color: #ff3030;
+}
+
+/* =========================
+   ACCESS STATUS
+========================= */
+
+.status {
+    margin-top: 18px;
+    height: 20px;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.45);
+}
+
+/* =========================
+   LEON PAGE
+========================= */
+
+#leonPage {
+    display: none;
+}
+
+.leon-background {
+    background:
+        radial-gradient(circle at center, #071c2d 0%, #03080e 50%, #010203 100%);
+}
+
+.leon-background .marquee {
+    color: rgba(120,190,255,0.055);
+}
+
+.leon-title {
+    text-shadow:
+        0 0 30px rgba(80,160,255,0.2),
+        0 0 80px rgba(80,160,255,0.1);
+}
+
+.leon-button {
+    border-color: rgba(120,190,255,0.45);
+}
+
+.leon-button:hover {
+    background: #dceeff;
+    color: #06101a;
+}
+
+/* =========================
+   TRANSITION
+========================= */
+
+.transition {
+    position: fixed;
+    inset: 0;
+    background: #050000;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.transition.active {
+    opacity: 1;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .title {
+        letter-spacing: 4px;
+    }
+
+    .marquee {
+        font-size: 45px;
+    }
+
+    .info-inner {
+        padding: 25px 15px;
+    }
+
+    .info p {
+        font-size: 13px;
+    }
+
+    .quote {
+        font-size: 13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     ADA PAGE
+========================= -->
+
+<section id="adaPage">
+
+    <div class="background">
+
+        <div class="marquee row1">
+            <span>ADA WONG</span>
+            <span>ADA WONG</span>
+            <span>ADA WONG</span>
+            <span>ADA WONG</span>
+        </div>
+
+        <div class="marquee row2">
+            <span>ADA WONG</span>
+            <span>ADA WONG</span>
+            <span>ADA WONG</span>
+            <span>ADA WONG</span>
+        </div>
+
+        <div class="marquee row3">
+            <span>ADA WONG</span>
+            <span>ADA WONG</span>
+            <span>ADA WONG</span>
+            <span>ADA WONG</span>
+        </div>
+
+        <div class="marquee row4">
+            <span>ADA WONG</span>
+            <span>ADA WONG</span>
+            <span>ADA WONG</span>
+            <span>ADA WONG</span>
+        </div>
+
+        <div class="marquee row5">
+            <span>ADA WONG</span>
+            <span>ADA WONG</span>
+            <span>ADA WONG</span>
+            <span>ADA WONG</span>
+        </div>
+
+    </div>
+
+    <main class="page">
+
+        <div class="container">
+
+            <div class="small-title">
+                Resident Evil
+            </div>
+
+            <h1 class="title">
+                Ada Wong
+            </h1>
+
+            <div class="subtitle">
+                MYSTERY • ESPIONAGE • SURVIVAL
+            </div>
+
+            <button class="about-button" onclick="toggleAbout('adaInfo')">
+                ABOUT ADA
+            </button>
+
+            <div class="info" id="adaInfo">
+
+                <div class="info-inner">
+
+                    <h2>Ada Wong</h2>
+
+                    <p>
+                        Ada Wong is a mysterious and highly skilled spy
+                        associated with the Resident Evil series.
+                        She is known for her intelligence, agility,
+                        combat abilities and complicated relationship
+                        with Leon S. Kennedy.
+                    </p>
+
+                    <p style="margin-top:15px;">
+                        Her motives are often difficult to determine,
+                        making her one of the most enigmatic characters
+                        in the series.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="quote">
+                «وَإِذْ رَأَى قَلْبُهُ أَدَا وَانگ،
+                فَقَالَ: هَٰذِهِ فِتْنَتِي فَاتَّبِعُونِي»
+            </div>
+
+            <div class="score-area">
+
+                <button class="score-button" onclick="addScore()">
+                    +
+                </button>
+
+                <div class="score">
+                    ADA POINTS: <span id="score">0</span>
+                </div>
+
+            </div>
+
+            <div class="access">
+
+                <div class="access-text">
+                    THERE IS ANOTHER STORY
+                </div>
+
+                <button class="access-button" onclick="accessLeon()">
+                    CONTINUE
+                </button>
+
+                <div class="status" id="status"></div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</section>
+
+
+<!-- =========================
+     LEON PAGE
+========================= -->
+
+<section id="leonPage">
+
+    <div class="background leon-background">
+
+        <div class="marquee row1">
+            <span>LEON S. KENNEDY</span>
+            <span>LEON S. KENNEDY</span>
+            <span>LEON S. KENNEDY</span>
+        </div>
+
+        <div class="marquee row2">
+            <span>LEON S. KENNEDY</span>
+            <span>LEON S. KENNEDY</span>
+            <span>LEON S. KENNEDY</span>
+        </div>
+
+        <div class="marquee row3">
+            <span>LEON S. KENNEDY</span>
+            <span>LEON S. KENNEDY</span>
+            <span>LEON S. KENNEDY</span>
+        </div>
+
+        <div class="marquee row4">
+            <span>LEON S. KENNEDY</span>
+            <span>LEON S. KENNEDY</span>
+            <span>LEON S. KENNEDY</span>
+        </div>
+
+        <div class="marquee row5">
+            <span>LEON S. KENNEDY</span>
+            <span>LEON S. KENNEDY</span>
+            <span>LEON S. KENNEDY</span>
+        </div>
+
+    </div>
+
+    <main class="page">
+
+        <div class="container">
+
+            <div class="small-title">
+                Resident Evil
+            </div>
+
+            <h1 class="title leon-title">
+                Leon
+            </h1>
+
+            <div class="subtitle">
+                S. KENNEDY
+            </div>
+
+            <button class="about-button leon-button"
+                    onclick="toggleAbout('leonInfo')">
+                ABOUT LEON
+            </button>
+
+            <div class="info" id="leonInfo">
+
+                <div class="info-inner">
+
+                    <h2>Leon S. Kennedy</h2>
+
+                    <p>
+                        Leon S. Kennedy is one of the central characters
+                        of Resident Evil. Beginning as a rookie police
+                        officer, he eventually became a highly trained
+                        government agent.
+                    </p>
+
+                    <p style="margin-top:15px;">
+                        Leon is recognized for his combat skills,
+                        determination and repeated encounters with
+                        biological threats throughout the series.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="quote">
+                SOME STORIES NEVER REALLY END.
+            </div>
+
+            <div class="score-area">
+
+                <button class="score-button" onclick="addLeonScore()">
+                    +
+                </button>
+
+                <div class="score">
+                    LEON POINTS: <span id="leonScore">0</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</section>
+
+
+<div class="transition" id="transition"></div>
+
+
+<script>
+
+/* =========================
+   SCORE
+========================= */
+
+let score = Number(localStorage.getItem("adaScore")) || 0;
+
+document.getElementById("score").textContent = score;
+
+function addScore() {
+
+    score++;
+
+    localStorage.setItem("adaScore", score);
+
+    document.getElementById("score").textContent = score;
+}
+
+
+/* =========================
+   LEON SCORE
+========================= */
+
+let leonScore = Number(localStorage.getItem("leonScore")) || 0;
+
+document.getElementById("leonScore").textContent = leonScore;
+
+function addLeonScore() {
+
+    leonScore++;
+
+    localStorage.setItem("leonScore", leonScore);
+
+    document.getElementById("leonScore").textContent = leonScore;
+}
+
+
+/* =========================
+   ABOUT BUTTON
+========================= */
+
+function toggleAbout(id) {
+
+    const element = document.getElementById(id);
+
+    element.classList.toggle("show");
+}
+
+
+/* =========================
+   SECRET LEON CODE
+========================= */
+
+/*
+    Sequence:
+
+    1. Press CONTINUE
+    2. Wait 2 seconds
+    3. Press CONTINUE
+    4. Press CONTINUE
+
+    Then Leon opens.
+*/
+
+let firstClickTime = 0;
+let clickCount = 0;
+
+function accessLeon() {
+
+    const status = document.getElementById("status");
+
+    const now = Date.now();
+
+    /* FIRST CLICK */
+
+    if (clickCount === 0) {
+
+        firstClickTime = now;
+        clickCount = 1;
+
+        status.textContent = "WAIT...";
+
+        return;
+    }
+
+
+    /* SECOND CLICK */
+
+    if (clickCount === 1) {
+
+        const difference = now - firstClickTime;
+
+        if (difference < 2000) {
+
+            status.textContent = "TOO FAST.";
+
+            clickCount = 0;
+
+            return;
+        }
+
+        clickCount = 2;
+
+        status.textContent = "ONE MORE.";
+
+        return;
+    }
+
+
+    /* THIRD CLICK */
+
+    if (clickCount === 2) {
+
+        clickCount = 0;
+
+        status.textContent = "ACCESS GRANTED";
+
+        openLeon();
+
+    }
+
+}
+
+
+/* =========================
+   OPEN LEON
+========================= */
+
+function openLeon() {
+
+    const transition = document.getElementById("transition");
+
+    transition.classList.add("active");
+
+    setTimeout(() => {
+
+        document.getElementById("adaPage").style.display = "none";
+
+        document.getElementById("leonPage").style.display = "block";
+
+        window.scrollTo(0, 0);
+
+        setTimeout(() => {
+
+            transition.classList.remove("active");
+
+        }, 300);
+
+    }, 900);
+
+}
+
+</script>
+
+</body>
+</html>
